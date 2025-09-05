@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Պիցցայի տեխնոլոգիական քարտ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --primary: #e74c3c;
+      --primary-dark: #c0392b;
+      --secondary: #f39c12;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --gray: #95a5a6;
+      --success: #27ae60;
+      --whatsapp: #25D366;
+      --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .subtitle {
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .card-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid var(--light);
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .input-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--light);
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    tr:hover {
+      background-color: #f1f4f8;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+    }
+    
+    .btn-secondary:hover {
+      background: #e67e22;
+    }
+    
+    .btn-success {
+      background: var(--success);
+    }
+    
+    .btn-success:hover {
+      background: #219653;
+    }
+    
+    .btn-whatsapp {
+      background: var(--whatsapp);
+    }
+    
+    .btn-whatsapp:hover {
+      background: #128C7E;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-danger {
+      background: #e74c3c;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .total-section {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    
+    .total-input {
+      width: 150px;
+      padding: 10px;
+      margin-left: 15px;
+      border: 2px solid var(--light);
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: right;
+      color: var(--primary);
+    }
+    
+    .total-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    input[type="number"] {
+      text-align: right;
+    }
+    
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+      
+      .total-section {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .total-input {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: var(--success);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--light);
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-pizza-slice"></i> CIA soft տեխնոլոգիական քարտ</h1>
+      <p class="subtitle">Ստեղծեք պրոֆեսիոնալ տեխնոլոգիական քարտեր </p>
+    </header>
+    
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-info-circle"></i> Հիմնական տվյալներ</h2>
+      
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="name">Անվանում</label>
+          <input id="name" type="text" placeholder="Մարգարիտա, Պեպերոնի...">
+        </div>
+        
+        <div class="input-group">
+          <label for="size">Չափ (սմ)</label>
+          <input id="size" type="text" placeholder="30, 40...">
+        </div>
+        
+        <div class="input-group">
+          <label for="bake">Թխման ռեժիմ</label>
+          <input id="bake" type="text" placeholder="200°C, 12 րոպե">
+        </div>
+        
+        <div class="input-group">
+          <label for="desc">Նկարագրություն</label>
+          <input id="desc" type="text" placeholder="Պիցցա մոցարելլա պանրով և բազուկով...">
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-list"></i> Բաղադրիչներ</h2>
+      
+      <table id="ingredientsTable">
+        <thead>
+          <tr>
+            <th>Անվանում</th>
+            <th>Քանակ</th>
+            <th>Չափման միավոր</th>
+            <th>Գին (AMD)</th>
+            <th>Գործողություն</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      
+      <button class="btn" onclick="addIngredient()">
+        <i class="fas fa-plus"></i> Ավելացնել բաղադրիչ
+      </button>
+      
+      <div class="total-section">
+        Ընդամենը: 
+        <input type="number" id="total" class="total-input" value="0" min="0" placeholder="0">
+        AMD
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-success" onclick="saveLocal()">
+        <i class="fas fa-save"></i> Պահել տեղում
+      </button>
+      <button class="btn" onclick="loadLocal()">
+        <i class="fas fa-folder-open"></i> Բացել տեղում
+      </button>
+      <button class="btn" onclick="exportExcel()">
+        <i class="fas fa-file-excel"></i> Excel արտահանում
+      </button>
+      <button class="btn btn-secondary" onclick="exportPDF()">
+        <i class="fas fa-file-pdf"></i> PDF արտահանում
+      </button>
+      <button class="btn btn-whatsapp" onclick="shareWhatsApp()">
+        <i class="fab fa-whatsapp"></i> Ուղարկել WhatsApp-ով
+      </button>
+      <button class="btn btn-outline" onclick="newCard()">
+        <i class="fas fa-plus"></i> Նոր քարտ
+      </button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="phoneModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Մուտքագրել հեռախոսահամար</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="input-group">
+        <label for="phoneNumber">Հեռախոսահամար</label>
+        <input type="tel" id="phoneNumber" placeholder="+374XXXXXXXX">
+      </div>
+      <button class="btn btn-whatsapp" onclick="sendWhatsApp()" style="width: 100%; margin-top: 15px;">
+        <i class="fab fa-whatsapp"></i> Ուղարկել
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize jsPDF
+    const { jsPDF } = window.jspdf;
+    
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.background = isSuccess ? 'var(--success)' : 'var(--primary)';
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    function addIngredient(name = '', qty = '', unit = '', price = '') {
+      const tbody = document.querySelector('#ingredientsTable tbody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input value="${name}" placeholder="Անվանում"></td>
+        <td><input type="number" value="${qty}" placeholder="0" min="0" step="0.01"></td>
+        <td><input value="${unit}" placeholder="գ, կգ, հատ..."></td>
+        <td><input type="number" value="${price}" placeholder="0" min="0" step="0.01"></td>
+        <td><button class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove();"><i class="fas fa-trash"></i></button></td>
+      `;
+      tbody.appendChild(row);
+    }
+    
+    function saveLocal() {
+      const data = collectData();
+      localStorage.setItem('techCard', JSON.stringify(data));
+      showToast('Տվյալները հաջողությամբ պահպանված են');
+    }
+    
+    function loadLocal() {
+      const data = JSON.parse(localStorage.getItem('techCard') || '{}');
+      if (Object.keys(data).length === 0) {
+        showToast('Պահպանված տվյալներ չեն գտնվել', false);
+        return;
+      }
+      fillData(data);
+      showToast('Տվյալները բեռնված են');
+    }
+    
+    function exportExcel() {
+      const data = collectData();
+      
+      // Prepare worksheet data
+      const worksheetData = [
+        ['Պիցցայի տեխնոլոգիական քարտ'],
+        [],
+        ['Անվանում', data.name],
+        ['Չափ (սմ)', data.size],
+        ['Թխման ռեժիմ', data.bake],
+        ['Նկարագրություն', data.desc],
+        [],
+        ['Բաղադրիչներ'],
+        ['Անվանում', 'Քանակ', 'Չափման միավոր', 'Գին (AMD)']
+      ];
+      
+      // Add ingredients
+      data.ingredients.forEach(ingredient => {
+        worksheetData.push([ingredient.name, ingredient.qty, ingredient.unit, ingredient.price]);
+      });
+      
+      // Add total
+      worksheetData.push([]);
+      worksheetData.push(['Ընդամենը', data.total, 'AMD']);
+      
+      // Create workbook and worksheet
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+      
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Տեխնոլոգիական քարտ');
+      
+      // Export to Excel
+      XLSX.writeFile(wb, 'pizza_tech_card.xlsx');
+      showToast('Excel ֆայլը ներբեռնված է');
+    }
+    
+    function exportPDF() {
+      const doc = new jsPDF();
+      
+      // Add title
+      doc.setFontSize(20);
+      doc.setTextColor(231, 76, 60);
+      doc.text('Պիցցայի տեխնոլոգիական քարտ', 105, 15, { align: 'center' });
+      
+      // Add basic information
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      
+      const data = collectData();
+      
+      doc.text(`Անվանում: ${data.name}`, 20, 30);
+      doc.text(`Չափ (սմ): ${data.size}`, 20, 40);
+      doc.text(`Թխման ռեժիմ: ${data.bake}`, 20, 50);
+      doc.text(`Նկարագրություն: ${data.desc}`, 20, 60);
+      
+      // Add ingredients table
+      doc.text('Բաղադրիչներ:', 20, 80);
+      
+      let startY = 90;
+      
+      // Table headers
+      doc.setFillColor(231, 76, 60);
+      doc.setTextColor(255, 255, 255);
+      doc.rect(20, startY, 170, 10, 'F');
+      doc.text('Անվանում', 22, startY + 7);
+      doc.text('Քանակ', 70, startY + 7);
+      doc.text('Չափման միավոր', 100, startY + 7);
+      doc.text('Գին (AMD)', 150, startY + 7);
+      
+      // Table rows
+      doc.setTextColor(0, 0, 0);
+      startY += 10;
+      
+      data.ingredients.forEach(ingredient => {
+        if (startY > 250) {
+          doc.addPage();
+          startY = 20;
+        }
+        
+        doc.text(ingredient.name, 22, startY + 7);
+        doc.text(ingredient.qty, 70, startY + 7);
+        doc.text(ingredient.unit, 100, startY + 7);
+        doc.text(ingredient.price, 150, startY + 7);
+        
+        startY += 10;
+      });
+      
+      // Add total
+      startY += 10;
+      doc.setFontSize(14);
+      doc.text(`Ընդամենը: ${data.total} AMD`, 20, startY);
+      
+      // Save the PDF
+      doc.save('pizza_tech_card.pdf');
+      showToast('PDF ֆայլը ներբեռնված է');
+    }
+    
+    function shareWhatsApp() {
+      document.getElementById('phoneModal').style.display = 'flex';
+    }
+    
+    function closeModal() {
+      document.getElementById('phoneModal').style.display = 'none';
+    }
+    
+    function sendWhatsApp() {
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      if (!phoneNumber) {
+        showToast('Մուտքագրեք հեռախոսահամարը', false);
+        return;
+      }
+      
+      const data = collectData();
+      
+      // Create message text
+      let message = `Պիցցայի տեխնոլոգիական քարտ%0A%0A`;
+      message += `Անվանում: ${data.name}%0A`;
+      message += `Չափ: ${data.size} սմ%0A`;
+      message += `Թխման ռեժիմ: ${data.bake}%0A`;
+      message += `Նկարագրություն: ${data.desc}%0A%0A`;
+      
+      message += `Բաղադրիչներ:%0A`;
+      data.ingredients.forEach(ingredient => {
+        message += `- ${ingredient.name}: ${ingredient.qty} ${ingredient.unit}, ${ingredient.price} AMD%0A`;
+      });
+      
+      message += `%0AԸնդամենը: ${data.total} AMD`;
+      
+      // Create WhatsApp link
+      const url = `https://wa.me/${phoneNumber}?text=${message}`;
+      
+      // Open in new tab
+      window.open(url, '_blank');
+      closeModal();
+      showToast('Հաղորդագրությունը պատրաստ է ուղարկման');
+    }
+    
+    function newCard() {
+      if (confirm('Վստահ եք, որ ցանկանում եք սկսել նոր քարտ? Անպահպանված տվյալները կկորչեն:')) {
+        document.getElementById('name').value = '';
+        document.getElementById('size').value = '';
+        document.getElementById('bake').value = '';
+        document.getElementById('desc').value = '';
+        document.getElementById('total').value = '0';
+        document.querySelector('#ingredientsTable tbody').innerHTML = '';
+        showToast('Ստեղծված է նոր քարտ');
+      }
+    }
+    
+    function collectData() {
+      const data = {
+        name: document.getElementById('name').value,
+        size: document.getElementById('size').value,
+        bake: document.getElementById('bake').value,
+        desc: document.getElementById('desc').value,
+        total: document.getElementById('total').value,
+        ingredients: []
+      };
+      document.querySelectorAll('#ingredientsTable tbody tr').forEach(tr => {
+        data.ingredients.push({
+          name: tr.children[0].children[0].value,
+          qty: tr.children[1].children[0].value,
+          unit: tr.children[2].children[0].value,
+          price: tr.children[3].children[0].value
+        });
+      });
+      return data;
+    }
+    
+    function fillData(data) {
+      document.getElementById('name').value = data.name || '';
+      document.getElementById('size').value = data.size || '';
+      document.getElementById('bake').value = data.bake || '';
+      document.getElementById('desc').value = data.desc || '';
+      document.getElementById('total').value = data.total || '0';
+      document.querySelector('#ingredientsTable tbody').innerHTML = '';
+      (data.ingredients || []).forEach(i => addIngredient(i.name, i.qty, i.unit, i.price));
+    }
+    
+    // Initialize with one empty ingredient row
+    document.addEventListener('DOMContentLoaded', function() {
+      addIngredient();
+    });
+  </script>
+</body>
+</html>
