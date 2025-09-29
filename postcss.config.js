@@ -1,1 +1,6 @@
-vr
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
